@@ -1,4 +1,4 @@
-package com.melchenko.springboot_mvc.sweater;
+package com.melchenko.springboot_mvc.sweater.controller;
 
 import java.util.Map;
 
@@ -12,12 +12,12 @@ import com.melchenko.springboot_mvc.sweater.domain.Message;
 import com.melchenko.springboot_mvc.sweater.reps.MessageRepo;
 
 @Controller
-public class GreetingController {
+public class MainController {
 
 	private MessageRepo messageRepo;
 
 	@Autowired
-	public GreetingController(MessageRepo messageRepo) {
+	public MainController(MessageRepo messageRepo) {
 		this.messageRepo = messageRepo;
 	}
 
