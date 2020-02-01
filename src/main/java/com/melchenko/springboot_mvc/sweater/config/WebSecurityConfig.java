@@ -10,24 +10,26 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 
+import com.melchenko.springboot_mvc.sweater.service.UserService;
+
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-	private DataSource dataSource;
+//	private final DataSource dataSource;
+
+	private final UserService userService;
 
 	@Autowired
-	public WebSecurityConfig(DataSource dataSource) {
-		this.dataSource = dataSource;
+	public WebSecurityConfig(DataSource dataSource, UserService userService) {
+		this.userService = userService;
+//		this.dataSource = dataSource;
 	}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests()
-		.antMatchers("/", "/home", "/registration").permitAll()
-		.anyRequest().authenticated()
-		.and().formLogin().loginPage("/login").permitAll()
-		.and().logout().permitAll();
+		http.authorizeRequests().antMatchers("/", "/home", "/registration").permitAll().anyRequest().authenticated()
+				.and().formLogin().loginPage("/login").permitAll().and().logout().permitAll();
 	}
 
 //	@Bean
@@ -45,11 +47,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
-		authenticationManagerBuilder.jdbcAuthentication().dataSource(dataSource)
-				.passwordEncoder(NoOpPasswordEncoder.getInstance())
-				.usersByUsernameQuery("select username, password, active from usr where username = ?")
-				.authoritiesByUsernameQuery(
-						"select u.username, ur.roles from usr u inner join user_role ur on u.id = ur.user_id where u.username = ? ");
+
+		authenticationManagerBuilder.userDetailsService(userService).passwordEncoder(NoOpPasswordEncoder.getInstance());
+
+//		authenticationManagerBuilder.jdbcAuthentication().dataSource(dataSource)
+//				.passwordEncoder(NoOpPasswordEncoder.getInstance());
+//				.usersByUsernameQuery("select username, password, active from usr where username = ?")
+//				.authoritiesByUsernameQuery(
+//						"select u.username, ur.roles from usr u inner join user_role ur on u.id = ur.user_id where u.username = ? ");
 	}
 
 }
