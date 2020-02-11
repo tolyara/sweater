@@ -1,6 +1,6 @@
 <#import "parts/common.ftl" as c>
 
 <@c.page>
-<div>Hello, ${name}</div>
-<a href="/main"> To main page </a>
+<h5>Hello, guest</h5>
+<div>This is a simple Spring MVC app called Sweater</div>
 </@c.page>
