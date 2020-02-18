@@ -1,15 +1,15 @@
 package com.melchenko.springboot_mvc.sweater.config;
 
-import javax.sql.DataSource;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.melchenko.springboot_mvc.sweater.service.UserService;
 
@@ -20,13 +20,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 //	private final DataSource dataSource;
 
-	private final UserService userService;
-
 	@Autowired
-	public WebSecurityConfig(DataSource dataSource, UserService userService) {
-		this.userService = userService;
-//		this.dataSource = dataSource;
+	private UserService userService;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	
+	@Bean
+	public PasswordEncoder getPasswordEncoder() {
+		return new BCryptPasswordEncoder(8);
 	}
+
+//	@Autowired
+//	public WebSecurityConfig(UserService userService, PasswordEncoder passwordEncoder) {
+//		this.userService = userService;
+//		this.passwordEncoder = passwordEncoder;
+////		this.dataSource = dataSource;
+//	}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -50,7 +59,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
 
-		authenticationManagerBuilder.userDetailsService(userService).passwordEncoder(NoOpPasswordEncoder.getInstance());
+		authenticationManagerBuilder.userDetailsService(userService).passwordEncoder(passwordEncoder);
+		
+		
+		
+//		authenticationManagerBuilder.userDetailsService(userService).passwordEncoder(NoOpPasswordEncoder.getInstance());
 
 //		authenticationManagerBuilder.jdbcAuthentication().dataSource(dataSource)
 //				.passwordEncoder(NoOpPasswordEncoder.getInstance());

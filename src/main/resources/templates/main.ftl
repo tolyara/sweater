@@ -14,15 +14,25 @@
 	href="#collapseExample" role="button" aria-expanded="false"
 	aria-controls="collapseExample"> Add new message </a>
 
-<div class="collapse" id="collapseExample">
+<div class="collapse <#if message??>show</#if>" id="collapseExample">
 	<div class="form-group mt-3">
 		<form method="post" enctype="multipart/form-data">
 			<div class="form-group">
-				<input type="text" name="text" class="form-control"
-					placeholder="Введите сообщение" />
+				<input type="text" name="text" class="form-control ${ (textError??)?string('is-invalid', '') }"
+					value="<#if message??> ${message.text} </#if>" placeholder="Введите сообщение" />
+				<#if textError??>
+				<div class="invalid-feedback">
+        			${textError}
+      			</div>
+      			</#if>
 			</div>
 			<div class="form-group">
-				<input type="text" name="tag" class="form-control" placeholder="Тэг">
+				<input type="text" value="<#if message??> ${message.tag} </#if>" name="tag" class="form-control" placeholder="Тэг">
+				<#if tagError??>
+				<div class="invalid-feedback">
+        			${tagError}
+      			</div>
+      			</#if>
 			</div>
 			<div class="form-group">
 				<div class="custom-file">
