@@ -14,7 +14,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
@@ -34,9 +33,9 @@ public class User implements UserDetails {
 	
 	@NotBlank(message = "Password cannot be empty")
 	private String password;
-	@Transient
+//	@Transient
 //	@NotBlank(message = "Password confirmation cannot be empty")
-	private String password2;
+//	private String password2;
 	
 	private boolean active;
 	
@@ -107,13 +106,13 @@ public class User implements UserDetails {
 		this.activationCode = activationCode;
 	}
 
-	public String getPassword2() {
-		return password2;
-	}
-
-	public void setPassword2(String password2) {
-		this.password2 = password2;
-	}
+//	public String getPassword2() {
+//		return password2;
+//	}
+//
+//	public void setPassword2(String password2) {
+//		this.password2 = password2;
+//	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {		
