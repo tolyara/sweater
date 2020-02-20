@@ -3,6 +3,7 @@ package com.melchenko.springboot_mvc.sweater.domain;
 import java.util.Collection;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -13,6 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -49,6 +51,9 @@ public class User implements UserDetails {
 	@CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
 	@Enumerated(EnumType.STRING)
 	private Set<Role> roles;
+	
+	@OneToMany(mappedBy = "author", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private Set<Message> messages;
 
 	public Long getId() {
 		return id;
@@ -106,13 +111,13 @@ public class User implements UserDetails {
 		this.activationCode = activationCode;
 	}
 
-//	public String getPassword2() {
-//		return password2;
-//	}
-//
-//	public void setPassword2(String password2) {
-//		this.password2 = password2;
-//	}
+	public Set<Message> getMessages() {
+		return messages;
+	}
+
+	public void setMessages(Set<Message> messages) {
+		this.messages = messages;
+	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {		
@@ -145,6 +150,31 @@ public class User implements UserDetails {
 	
 	public boolean isAdmin() {
 		return roles.contains(Role.ADMIN);
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		User other = (User) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
 	}
 	
 }

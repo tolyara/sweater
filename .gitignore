@@ -32,3 +32,14 @@ HELP.md
 ### Eclipse ###
 *.class
 bin/
+
+### Properties ###
+*.properties
+*.launch
+
+
+
+
+
+
+

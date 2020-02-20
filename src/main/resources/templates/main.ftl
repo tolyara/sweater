@@ -49,24 +49,8 @@
 </div>
 <br>
 
-<div class="card-columns">
-<#list messages as message>
-<div class="card my-3">
-	<div>
-		<#if message.filename??> 
-		<img src="/img/${message.filename}" class="card-img-top"> </#if>
-	</div>
-	<div class="m-2">
-		<span>${message.text}</span> <i>${message.tag}</i> 
-	</div>
-	<div class="card-footer text-muted">
-		${message.authorName}
-	</div>
+<#include "parts/messageList.ftl"/>  <!-- #include directive pasts code right into this place -->
 
-</div>
-<#else> No messages found 
-</#list>
-</div>
 </@c.page> 
 
 
