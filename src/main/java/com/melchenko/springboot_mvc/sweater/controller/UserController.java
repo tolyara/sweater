@@ -64,5 +64,42 @@ public class UserController {
 		userService.updateUserProfile(user, password, email);
 		return "redirect:/user/profile";
 	}
+	
+	@GetMapping("subscribe/{user}")
+	public String subscribe(@AuthenticationPrincipal User currentUser, @PathVariable User user) {
+		userService.subscribe(currentUser, user);
+		return "redirect:/user-messages/" + user.getId();
+	}
+	
+	@GetMapping("unsubscribe/{user}")
+	public String unsubscribe(@AuthenticationPrincipal User currentUser, @PathVariable User user) {
+		userService.unsubscribe(currentUser, user);
+		return "redirect:/user-messages/" + user.getId();
+	}
+	
+	@GetMapping("{type}/{user}/list")
+//	@GetMapping("subscribers/1/list")
+	public String userSubscriptionsList(Model model, @PathVariable User user, @PathVariable String type) {
+		model.addAttribute("userChannel", user);
+		model.addAttribute("type", type);
+		
+		if ("subscriptions".equals(type)) {
+			model.addAttribute("users", user.getSubscriptions());
+		}
+		else if ("subscribers".equals(type)) {
+			model.addAttribute("users", user.getSubscribers());
+		}
+		else {
+			throw new RuntimeException("Cannot define subscription type!");
+		}
+
+		return "subscriptions"; // must be correct else 404 will be throwed
+	}
+	
+	
+	
+	
+	
+	
 
 }
