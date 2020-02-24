@@ -4,7 +4,7 @@
 	<div class="form-group col-md-6">
 		<form method="get" action="/main" class="form-inline">
 			<input type="text" name="filter" value="${filter?ifExists}"
-				class="form-control" placeholder="Search by tag">
+				class="form-control" placeholder="Search by tag"/>
 			<button type="submit" class="btn btn-primary ml-2">Search</button>
 		</form>
 	</div>
@@ -27,7 +27,7 @@
       			</#if>
 			</div>
 			<div class="form-group">
-				<input type="text" value="<#if message??> ${message.tag} </#if>" name="tag" class="form-control" placeholder="Тэг">
+				<input type="text" value="<#if message??> ${message.tag} </#if>" name="tag" class="form-control" placeholder="Тэг"/>
 				<#if tagError??>
 				<div class="invalid-feedback">
         			${tagError}
@@ -36,7 +36,7 @@
 			</div>
 			<div class="form-group">
 				<div class="custom-file">
-					<input type="file" name="file" id="customFile"> <label
+					<input type="file" name="file" id="customFile"/> <label
 						class="custom-file-label" for="customFile"></label>
 				</div>
 			</div>
@@ -47,7 +47,7 @@
 		</form>
 	</div>
 </div>
-<br>
+<br/>
 
 <#include "parts/messageList.ftl"/>  <!-- #include directive pasts code right into this place -->
 
