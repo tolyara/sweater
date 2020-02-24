@@ -12,5 +12,5 @@
   		${message}
 	</div>
 </#if>
-<@l.login "/login" false/>
+<@l.login "/login" false />
 </@c.page>
