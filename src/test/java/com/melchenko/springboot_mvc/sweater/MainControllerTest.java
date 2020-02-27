@@ -19,7 +19,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
-import com.melchenko.springboot_mvc.sweater.controller.MainController;
+import com.melchenko.springboot_mvc.sweater.controller.MessageController;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -34,7 +34,7 @@ public class MainControllerTest {
 	private MockMvc mockMvc;
 
 	@Autowired
-	private MainController controller;
+	private MessageController controller;
 
 //	@WithUserDetails("999")
 	@Test

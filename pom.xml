@@ -133,6 +133,16 @@
 					<appName>tolyara-sweater</appName>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.flywaydb</groupId>
+				<artifactId>flyway-maven-plugin</artifactId>
+				<configuration>
+					<url>jdbc:postgresql://localhost/sweater</url>
+					<user>postgres</user>
+					<password>123321</password>
+				</configuration>
+
+			</plugin>
 		</plugins>
 	</build>
 
